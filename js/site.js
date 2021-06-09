@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.log("Recettes avec cet ingredient :");
                 let recipesToShow = searchRecipeFromIngredients(ingredient);
                 console.log(recipesToShow);
+                showRecipes(recipesToShow);
             }
         }
     });
@@ -78,4 +79,43 @@ function searchRecipeFromIngredients(ingredient) {
         }
     }
     return recipesResult;
+}
+
+function showRecipes(recipeArray) {
+    let recipeBlock = document.getElementById("recettes-list");
+    let recipesCard = '';
+    for(var i = 0; i < recipeArray.length; i++) {
+        let recipe = recipeArray[i];
+        recipesCard += '<div class="card"><img src="./img/logo.png" class="card-img-top" alt="Placeholder Image"><div class="card-body"><div class="row"><div class="col"><h3>' + recipe.name + '</h3></div><div class="col"><i class="far fa-clock"></i> ' + recipe.time + 'min</div></div><div class="row"><div class="col">' + createListOfIngredients(recipe.ingredients) + '</div><div class="col"><p>' + recipe.description + '</p></div></div></div></div>';
+    }
+    recipeBlock.innerHTML = recipesCard;
+}
+
+function createListOfIngredients(ingredientFromRecipe) {
+    let recipeString = '<ul class="list-unstyled">'
+    for(var i = 0; i < ingredientFromRecipe.length; i++) {
+        let ingredientInsideRecipe = ingredientFromRecipe[i];
+
+        let ingredientQuantity;
+        if(ingredientInsideRecipe.quantity) {
+            ingredientQuantity = ingredientInsideRecipe.quantity;
+        } else if(ingredientInsideRecipe.quantite) {
+            ingredientQuantity = ingredientInsideRecipe.quantite;
+        } else {
+            ingredientQuantity = '';
+        }
+
+
+        let ingredientUnit;
+        if(ingredientInsideRecipe.unit) {
+            ingredientUnit = ingredientInsideRecipe.unit;
+        } else {
+            ingredientUnit = '';
+        }
+
+        let ingredientString = '<li><strong>' + ingredientInsideRecipe.ingredient + '</strong> '+ ingredientQuantity + '  ' + ingredientUnit + '</li>';
+        recipeString += ingredientString;
+    }
+    recipeString += '</ul>';
+    return recipeString;
 }
