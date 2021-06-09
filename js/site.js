@@ -92,7 +92,7 @@ function showRecipes(recipeArray) {
 }
 
 function createListOfIngredients(ingredientFromRecipe) {
-    let recipeString = '<ul class="list-unstyled">'
+    let recipeString = '<ul class="list-unstyled">';
     for(var i = 0; i < ingredientFromRecipe.length; i++) {
         let ingredientInsideRecipe = ingredientFromRecipe[i];
 
